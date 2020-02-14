@@ -12,24 +12,30 @@ function toggle(hideId) {
  }
 }
 
-
+var puzzleNum = 0;
+var totalPuzzleNum = 2;
+function nextPuzzle(){
+    puzzleNum = (puzzleNum + 1) % totalPuzzleNum;
+    console.log("PUZZLE# " + puzzleNum);
+    tableCreate();
+}
 
 function tableCreate(){
-    var alg
+    var alg;
+    var filename = "http://localhost:8000/alg" + (puzzleNum + 1) + ".txt";
     $.ajax({//ajax method to load the board.json and call the loadBoard() function on success
       'async': false,
       'global': false,
       type:'GET',
       dataType:'text',
-      url:"http://localhost:8000/alg.txt",
+      url:filename,
       success:function(data){
 //         $("#main-container").hide()
           alg = data;
-  	console.log("loaded " + data);
+  	console.log("loaded from " + filename);
       }
     });
 
-    console.log("DATA: " + alg);
     var arrayOfLines = alg.split("\n");
 
     var tableDiv = document.getElementById("myDynamicTable")
@@ -53,7 +59,11 @@ function tableCreate(){
         })(tdLineId)
 	tdLine.appendChild(document.createTextNode(arrayOfLines[i]));
     }
-    tableDiv.appendChild(tbl);
+    if (tableDiv.childNodes.length == 0)
+        tableDiv.appendChild(tbl);
+    else {
+        tableDiv.replaceChild(tbl, tableDiv.childNodes[0]);
+    }
 }
 </script>
 </head>
@@ -65,6 +75,8 @@ function tableCreate(){
 <script>
 tableCreate();
 </script>
+
+<button onclick="nextPuzzle()">Next puzzle</button>
 
 
 </body>
