@@ -1,5 +1,8 @@
 <html>
 <head>
+    <meta charset="UTF-8">
+    <script src="include/jquery-1.11.0.min.js"></script>
+
 <script>
 function toggle(hideId) {
  if( document.getElementById(hideId).style.visibility=='visible' ){
@@ -9,10 +12,24 @@ function toggle(hideId) {
  }
 }
 
+$(function(){
+  $.ajax({//ajax method to load the board.json and call the loadBoard() function on success
+    'async': false,
+    'global': false,
+    type:'GET',
+    dataType:'txt',
+    url:"http://localhost:8000/alg.txt",
+    success:function(data){
+//       $("#main-container").hide()
+        alg = data;
+    }
+  });
+});
+
 function tableCreate(){
 
-    //var alg = document.getElementById("alg");	
-    //var arrayOfLines = alg.value.split("\n");
+//    var alg = document.getElementById("alg");	
+//    var arrayOfLines = alg.value.split("\n");
 
     var tableDiv = document.getElementById("myDynamicTable")
     var tbl = document.createElement('TABLE');
@@ -43,14 +60,6 @@ function tableCreate(){
 <body>
 
 <div id="myDynamicTable"></div>
-
-<div id="alg">
-11111
-22222
-3333
-4444
-</div>
-
 
 <script>
 tableCreate();
