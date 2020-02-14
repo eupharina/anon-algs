@@ -12,31 +12,32 @@ function toggle(hideId) {
  }
 }
 
-$(function(){
-  $.ajax({//ajax method to load the board.json and call the loadBoard() function on success
-    'async': false,
-    'global': false,
-    type:'GET',
-    dataType:'txt',
-    url:"http://localhost:8000/alg.txt",
-    success:function(data){
-//       $("#main-container").hide()
-        alg = data;
-    }
-  });
-});
+
 
 function tableCreate(){
+    var alg
+    $.ajax({//ajax method to load the board.json and call the loadBoard() function on success
+      'async': false,
+      'global': false,
+      type:'GET',
+      dataType:'text',
+      url:"http://localhost:8000/alg.txt",
+      success:function(data){
+//         $("#main-container").hide()
+          alg = data;
+  	console.log("loaded " + data);
+      }
+    });
 
-//    var alg = document.getElementById("alg");	
-//    var arrayOfLines = alg.value.split("\n");
+    console.log("DATA: " + alg);
+    var arrayOfLines = alg.split("\n");
 
     var tableDiv = document.getElementById("myDynamicTable")
     var tbl = document.createElement('TABLE');
     tbl.style.width  = '1000px';
     //tbl.style.border = '1px solid black';
 
-    for(var i = 0; i < 3; i++){
+    for(var i = 0; i < arrayOfLines.length; i++){
         var tr = tbl.insertRow();
         var tdNum = tr.insertCell();
         tdNum.appendChild(document.createTextNode(i));
@@ -50,7 +51,7 @@ function tableCreate(){
 	        toggle(index);
 	    });
         })(tdLineId)
-	tdLine.appendChild(document.createTextNode("I am line" + i));
+	tdLine.appendChild(document.createTextNode(arrayOfLines[i]));
     }
     tableDiv.appendChild(tbl);
 }
