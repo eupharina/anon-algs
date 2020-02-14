@@ -20,6 +20,15 @@ function nextPuzzle(){
     tableCreate();
 }
 
+var curLines
+function showAnswer() {
+    for (var i = 0; i < curLines; i++) {
+        var tdLineId = "line" + i;
+        var tdLine = document.getElementById(tdLineId);
+        tdLine.style.visibility = 'visible';
+    }
+}
+
 function tableCreate(){
     var alg;
     var filename = "http://localhost:8000/alg" + (puzzleNum + 1) + ".txt";
@@ -37,6 +46,7 @@ function tableCreate(){
     });
 
     var arrayOfLines = alg.split("\n");
+    curLines = arrayOfLines.length
 
     var tableDiv = document.getElementById("myDynamicTable")
     var tbl = document.createElement('TABLE');
@@ -76,8 +86,8 @@ function tableCreate(){
 tableCreate();
 </script>
 
+<button onclick="showAnswer()">Show answer</button>
 <button onclick="nextPuzzle()">Next puzzle</button>
-
 
 </body>
 </html>
