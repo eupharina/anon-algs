@@ -1,0 +1,63 @@
+<html>
+<head>
+<script>
+function toggle(hideId) {
+ if( document.getElementById(hideId).style.visibility=='visible' ){
+   document.getElementById(hideId).style.visibility = 'hidden';
+ }else{
+   document.getElementById(hideId).style.visibility = 'visible';
+ }
+}
+
+function tableCreate(){
+
+    //var alg = document.getElementById("alg");	
+    //var arrayOfLines = alg.value.split("\n");
+
+    var tableDiv = document.getElementById("myDynamicTable")
+    var tbl = document.createElement('TABLE');
+    tbl.style.width  = '1000px';
+    //tbl.style.border = '1px solid black';
+
+    for(var i = 0; i < 3; i++){
+        var tr = tbl.insertRow();
+        var tdNum = tr.insertCell();
+        tdNum.appendChild(document.createTextNode(i));
+        tdNum.style.width  = '100px';
+        var tdLine = tr.insertCell();
+	tdLine.style.visibility = 'hidden';
+	var tdLineId = "line" + i;
+	tdLine.setAttribute("id", tdLineId);
+	(function(index){
+	    tdNum.addEventListener('click', function() {
+	        toggle(index);
+	    });
+        })(tdLineId)
+	tdLine.appendChild(document.createTextNode("I am line" + i));
+    }
+    tableDiv.appendChild(tbl);
+}
+</script>
+</head>
+
+<body>
+
+<div id="myDynamicTable"></div>
+
+<div id="alg">
+11111
+22222
+3333
+4444
+</div>
+
+
+<script>
+tableCreate();
+</script>
+
+
+</body>
+</html>
+
+
