@@ -31,7 +31,7 @@ function showAnswer() {
 
 function tableCreate(){
     var alg;
-    var filename = "http://localhost:8000/alg" + (puzzleNum + 1) + ".txt";
+    var filename = "http://localhost:8000/algs/" + (puzzleNum + 1) + ".txt";
     $.ajax({//ajax method to load the board.json and call the loadBoard() function on success
       'async': false,
       'global': false,
