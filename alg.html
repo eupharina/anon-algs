@@ -73,7 +73,7 @@ pre {
 	font-family: 'VT323', monospace;
 	color: yellow;
 	font-size: 50em;
-	margin-left: 1800px;
+	margin-left: 2800px;
 }
 
 </style>
@@ -151,13 +151,13 @@ pre {
 		});
 
 		var arrayOfLines = alg.split("\n");
-		curLines = arrayOfLines.length
+		curLines = arrayOfLines.length - 1
 
 		var tableDiv = document.getElementById("myDynamicTable")
 		var tbl = document.createElement('TABLE');
 		//tbl.style.border = '1px solid black';
 
-		for (var i = 0; i < arrayOfLines.length; i++) {
+		for (var i = 0; i < curLines; i++) {
 			var tr = tbl.insertRow();
 			createNum(tr, i);
 			var tdLine = tr.insertCell();
@@ -188,7 +188,7 @@ pre {
 
 <body>
 
-	<div style="width: 100%; overflow: hidden;">
+	<div style="width: 100%; overflow: hidden; margin-bottom: 50px;">
 		<div id="myDynamicTable" style="width: 1700px; float: left;"></div>
 		<div id="round" class="round"></div>
 	</div>
