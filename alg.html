@@ -1,101 +1,142 @@
 <html>
 <head>
-<meta charset="UTF-8">
-<script src="include/jquery-1.11.0.min.js"></script>
+	<meta charset="UTF-8">
+	<script src="include/jquery-1.11.0.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
+	
+<style>
+body {
+/*	background: url(bg2.jpg) center center;*/
+	background-color: black;
+	color: green;
+	height: 100%;
+}
+
+html {
+	height: 100%;
+}
+
+pre {
+	/*height:120px;
+            vertical-align: middle;
+            text-align: center;*/
+	font-size: 3em;
+	font-weight: light;
+	font-family: 'VT323', monospace;
+	/*text-transform: uppercase;
+            cursor: pointer;
+            padding-top: 25px;
+            background:rgba(245,245,245,0.0);*/
+	/*border-radius:0; */
+	/*border: 1px solid #f2d9e6;*/
+}
+
+td {
+	/*font-size: 4em;*/
+	font-family: 'Share Tech Mono', monospace;
+	/*border: 1px solid green;*/
+}
+
+</style>
 
 <script>
-function showRow(row) {
-	var censPre = document.getElementById("censored" + row);
-	censPre.style.display = 'none';
+	function showRow(row) {
+		var censPre = document.getElementById("censored" + row);
+		censPre.style.display = 'none';
+
+		var codePre = document.getElementById("codeline" + row);
+		codePre.style.display = 'block';
+	}
+
+	var puzzleNum = 0;
+	var totalPuzzleNum = 2;
+	function nextPuzzle() {
+		puzzleNum = (puzzleNum + 1) % totalPuzzleNum;
+		console.log("PUZZLE# " + puzzleNum);
+		tableCreate();
+	}
+
+	var curLines
+	function showAnswer() {
+		console.log("Show answer!");
+		for (var i = 0; i < curLines; i++) {
+			showRow(i);
+		}
+	}
+
+	function createPre(id, text, display) {
+		var codePre = document.createElement("pre");
+		codePre.style.margin = "0px 0px 0px 0px";
+		codePre.style.display = display;
+		codePre.setAttribute("id", id);
+
+		codePre.appendChild(document.createTextNode(text));
+		return codePre;
+	}
 	
-	var codePre = document.getElementById("codeline" + row);
-	codePre.style.display = 'block';
-}
+	function createNum(id) {
+		
+	}
 
-var puzzleNum = 0;
-var totalPuzzleNum = 2;
-function nextPuzzle(){
-    puzzleNum = (puzzleNum + 1) % totalPuzzleNum;
-    console.log("PUZZLE# " + puzzleNum);
-    tableCreate();
-}
+	function tableCreate() {
+		var alg;
+		var filename = "http://localhost:8000/algs/" + (puzzleNum + 1) + ".txt";
+		$.ajax({//ajax method to load the board.json and call the loadBoard() function on success
+			'async' : false,
+			'global' : false,
+			type : 'GET',
+			dataType : 'text',
+			url : filename,
+			success : function(data) {
+				//         $("#main-container").hide()
+				alg = data;
+				console.log("loaded from " + filename);
+			}
+		});
 
-var curLines
-function showAnswer() {
-	console.log("Show answer!");
-    for (var i = 0; i < curLines; i++) {
-    	showRow(i);
-    }
-}
+		var arrayOfLines = alg.split("\n");
+		curLines = arrayOfLines.length
 
-function createPre(id, text, display) {
-    var codePre = document.createElement("pre");
-    codePre.style.margin = "5px 0px 5px 0px";
-    codePre.style.display = display;
-    codePre.setAttribute("id", id);
-    
-    codePre.appendChild(document.createTextNode(text));
-    return codePre;
-}
+		var tableDiv = document.getElementById("myDynamicTable")
+		var tbl = document.createElement('TABLE');
+		//tbl.style.width = '1000px';
+		//tbl.style.border = '1px solid black';
 
-function tableCreate(){
-    var alg;
-    var filename = "http://localhost:8000/algs/" + (puzzleNum + 1) + ".txt";
-    $.ajax({//ajax method to load the board.json and call the loadBoard() function on success
-      'async': false,
-      'global': false,
-      type:'GET',
-      dataType:'text',
-      url:filename,
-      success:function(data){
-//         $("#main-container").hide()
-          alg = data;
-  	console.log("loaded from " + filename);
-      }
-    });
+		for (var i = 0; i < arrayOfLines.length; i++) {
+			var tr = tbl.insertRow();
 
-    var arrayOfLines = alg.split("\n");
-    curLines = arrayOfLines.length
+			var tdNum = tr.insertCell();
+			tdNum.appendChild(document.createTextNode(i));
+			//tdNum.style.width = '100px';
 
-    var tableDiv = document.getElementById("myDynamicTable")
-    var tbl = document.createElement('TABLE');
-    tbl.style.width  = '1000px';
-    //tbl.style.border = '1px solid black';
+			var tdLine = tr.insertCell();
+			//        tdLine.style.visibility = 'hidden';
+			//        var tdLineId = "line" + i;
+			//        tdLine.setAttribute("id", tdLineId);
 
-    for(var i = 0; i < arrayOfLines.length; i++){
-        var tr = tbl.insertRow();
-        
-        var tdNum = tr.insertCell();
-        tdNum.appendChild(document.createTextNode(i));
-        tdNum.style.width  = '100px';
-        
-        var tdLine = tr.insertCell();
-//        tdLine.style.visibility = 'hidden';
-//        var tdLineId = "line" + i;
-//        tdLine.setAttribute("id", tdLineId);
-        
-        (function(index){
-        	tdNum.addEventListener('click', function() {
-        		showRow(index);
-        	});
-        })(i)
-        
-        var codePre = createPre("codeline" + i, arrayOfLines[i], 'none');
-        
-        var censored = arrayOfLines[i].replace(/\S/g, "*");
-        var censPre = createPre("censored" + i, censored, 'block');
+			(function(index) {
+				tdNum.addEventListener('click', function() {
+					showRow(index);
+				});
+			})(i)
 
-        // Add both to the table
-        tdLine.appendChild(codePre);
-        tdLine.appendChild(censPre);
-    }
+			var codePre = createPre("codeline" + i, arrayOfLines[i], 'none');
 
-    if (tableDiv.childNodes.length == 0)
-        tableDiv.appendChild(tbl);
-    else {
-        tableDiv.replaceChild(tbl, tableDiv.childNodes[0]);
-    }
-}
+			var censored = arrayOfLines[i].replace(/\S/g, "*");
+			var censPre = createPre("censored" + i, censored, 'block');
+
+			// Add both to the table
+			tdLine.appendChild(codePre);
+			tdLine.appendChild(censPre);
+		}
+
+		if (tableDiv.childNodes.length == 0)
+			tableDiv.appendChild(tbl);
+		else {
+			tableDiv.replaceChild(tbl, tableDiv.childNodes[0]);
+		}
+	}
 </script>
 </head>
 
