@@ -28,6 +28,16 @@ function showAnswer() {
     }
 }
 
+function createPre(id, text, display) {
+    var codePre = document.createElement("pre");
+    codePre.style.margin = "5px 0px 5px 0px";
+    codePre.style.display = display;
+    codePre.setAttribute("id", id);
+    
+    codePre.appendChild(document.createTextNode(text));
+    return codePre;
+}
+
 function tableCreate(){
     var alg;
     var filename = "http://localhost:8000/algs/" + (puzzleNum + 1) + ".txt";
@@ -70,27 +80,10 @@ function tableCreate(){
         	});
         })(i)
         
-        // Create code element
-        var codePre = document.createElement("pre");
-        codePre.style.margin = "5px 0px 5px 0px";
-        codePre.style.display = 'none';
-        var codePreId = "codeline" + i;
-        codePre.setAttribute("id", codePreId);
+        var codePre = createPre("codeline" + i, arrayOfLines[i], 'none');
         
-        var codeLine = arrayOfLines[i];
-        codePre.appendChild(document.createTextNode(codeLine));
-        
-
-        // Create censored element
-        var censPre = document.createElement("pre");
-        censPre.style.margin = "5px 0px 5px 0px";
-        censPre.style.display = 'block';
-        var censPreId = "censored" + i;
-        censPre.setAttribute("id", censPreId);
-        
-        var censored = codeLine.replace(/\S/g, "*");
-        censPre.appendChild(document.createTextNode(censored));
-        
+        var censored = arrayOfLines[i].replace(/\S/g, "*");
+        var censPre = createPre("censored" + i, censored, 'block');
 
         // Add both to the table
         tdLine.appendChild(codePre);
