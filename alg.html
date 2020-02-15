@@ -7,10 +7,10 @@
 	
 <style>
 body {
-/*	background: url(bg2.jpg) center center;*/
-	background-color: black;
-	color: green;
+	/*	background: url(bg2.jpg) center center;*/
+	background-color: black; color : green;
 	height: 100%;
+	color: green;
 }
 
 html {
@@ -30,14 +30,35 @@ pre {
             background:rgba(245,245,245,0.0);*/
 	/*border-radius:0; */
 	/*border: 1px solid #f2d9e6;*/
+	padding-left: 50px;
 }
 
-td {
-	/*font-size: 4em;*/
-	font-family: 'Share Tech Mono', monospace;
-	/*border: 1px solid green;*/
+.num {
+	font-family: 'VT323', monospace;
+	font-size: 2em;
+	border: 5px dotted black;
+	text-align: right;
+	background-color: green;
+	color: white;
+	padding-right: 10px;
+	padding-left: 10px;
+	font-weight: bolder;
 }
 
+.button {
+	font-family: 'VT323', monospace;
+	background-color: black;
+	border: 6px solid red;
+	color: white;
+	padding: 15px 25px;
+	text-align: center;
+	font-size: 4em;
+	cursor: pointer;
+}
+
+.other-button {
+	border-color: yellow;
+}
 </style>
 
 <script>
@@ -75,8 +96,21 @@ td {
 		return codePre;
 	}
 	
-	function createNum(id) {
+	function createNum(tr, i) {
+		var tdNum = tr.insertCell();
 		
+		var div = document.createElement("div");
+		div.textContent = i;
+		div.setAttribute("class", 'num');
+		
+		tdNum.appendChild(div);
+		//tdNum.style.width = '100px';
+		
+		(function(index) {
+			tdNum.addEventListener('click', function() {
+				showRow(index);
+			});
+		})(i)
 	}
 
 	function tableCreate() {
@@ -105,21 +139,8 @@ td {
 
 		for (var i = 0; i < arrayOfLines.length; i++) {
 			var tr = tbl.insertRow();
-
-			var tdNum = tr.insertCell();
-			tdNum.appendChild(document.createTextNode(i));
-			//tdNum.style.width = '100px';
-
+			createNum(tr, i);
 			var tdLine = tr.insertCell();
-			//        tdLine.style.visibility = 'hidden';
-			//        var tdLineId = "line" + i;
-			//        tdLine.setAttribute("id", tdLineId);
-
-			(function(index) {
-				tdNum.addEventListener('click', function() {
-					showRow(index);
-				});
-			})(i)
 
 			var codePre = createPre("codeline" + i, arrayOfLines[i], 'none');
 
@@ -148,8 +169,8 @@ td {
 tableCreate();
 </script>
 
-	<button onclick="showAnswer()">Show answer</button>
-	<button onclick="nextPuzzle()">Next puzzle</button>
+	<button class="button" onclick="showAnswer()">Show answer</button>
+	<button class="button other-button" onclick="nextPuzzle()">Next puzzle</button>
 
 </body>
 </html>
