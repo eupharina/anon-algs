@@ -62,6 +62,14 @@ pre {
 .other-button {
 	border-color: yellow;
 }
+
+.round {
+	font-family: 'VT323', monospace;
+	color: yellow;
+	font-size: 50em;
+	margin-left: 1600px;
+}
+
 </style>
 
 <script>
@@ -139,7 +147,6 @@ pre {
 
 		var tableDiv = document.getElementById("myDynamicTable")
 		var tbl = document.createElement('TABLE');
-		//tbl.style.width = '1000px';
 		//tbl.style.border = '1px solid black';
 
 		for (var i = 0; i < arrayOfLines.length; i++) {
@@ -163,13 +170,20 @@ pre {
 		else {
 			tableDiv.replaceChild(tbl, tableDiv.childNodes[0]);
 		}
+		
+		var roundDiv = document.getElementById("round");
+		roundDiv.textContent = puzzleNum;
 	}
 </script>
 </head>
 
 <body>
 
-	<div id="myDynamicTable"></div>
+	<div style="width: 100%; overflow: hidden;">
+		<div id="myDynamicTable" style="width: 1500px; float: left;"></div>
+		<div id="round" class="round"></div>
+	</div>
+
 
 <script>
 tableCreate();
