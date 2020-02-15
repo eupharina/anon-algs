@@ -2,15 +2,17 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="include/jquery-1.11.0.min.js"></script>
+	
 	<link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=VT323&display=swap" rel="stylesheet">
 	
+	<link rel="stylesheet" href="include/styles/xt256.min.css">
+	<script src="include/highlight.min.js"></script>
 <style>
 body {
 	/*	background: url(bg2.jpg) center center;*/
-	background-color: black; color : green;
+	background-color: black;
 	height: 100%;
-	color: green;
 }
 
 html {
@@ -22,8 +24,8 @@ pre {
             vertical-align: middle;
             text-align: center;*/
 	font-size: 3em;
-	font-weight: light;
-	font-family: 'VT323', monospace;
+	font-weight: lighter;
+	font-family: 'Share Tech Mono', monospace;
 	/*text-transform: uppercase;
             cursor: pointer;
             padding-top: 25px;
@@ -31,6 +33,7 @@ pre {
 	/*border-radius:0; */
 	/*border: 1px solid #f2d9e6;*/
 	padding-left: 50px;
+	color: green;
 }
 
 .num {
@@ -89,6 +92,8 @@ pre {
 	function createPre(id, text, display) {
 		var codePre = document.createElement("pre");
 		codePre.style.margin = "0px 0px 0px 0px";
+		codePre.style.padding = "0px 0px 0px 0px";
+		codePre.style.backgroundColor = "black";
 		codePre.style.display = display;
 		codePre.setAttribute("id", id);
 
@@ -143,6 +148,7 @@ pre {
 			var tdLine = tr.insertCell();
 
 			var codePre = createPre("codeline" + i, arrayOfLines[i], 'none');
+			hljs.highlightBlock(codePre);
 
 			var censored = arrayOfLines[i].replace(/\S/g, "*");
 			var censPre = createPre("censored" + i, censored, 'block');
@@ -171,7 +177,6 @@ tableCreate();
 
 	<button class="button" onclick="showAnswer()">Show answer</button>
 	<button class="button other-button" onclick="nextPuzzle()">Next puzzle</button>
-
 </body>
 </html>
 
