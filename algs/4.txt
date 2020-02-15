@@ -1,0 +1,22 @@
+const
+  Nums : array[1 .. 100] of integer;
+var
+  Num : integer;
+
+procedure foo(SearchNum, First, Last : integer);
+var
+  MidPoint: integer;
+begin
+  if First > Last then
+    writeln('Search Failed')
+  else
+    begin
+      Midpoint := (First + Last) DIV 2;
+      if Nums[MidPoint] = SearchNum then
+        writeln('Found at position ', MidPoint)
+      else if Nums[MidPoint] < SearchNum then
+        foo(SearchNum, MidPoint + 1, Last)
+      else
+        foo(SearchNum, First, MidPoint - 1);
+    end;
+end;

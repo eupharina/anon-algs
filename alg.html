@@ -19,6 +19,12 @@ html {
 	height: 100%;
 }
 
+td {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 50px;
+}
+
 pre {
 	/*height:120px;
             vertical-align: middle;
@@ -38,7 +44,7 @@ pre {
 
 .num {
 	font-family: 'VT323', monospace;
-	font-size: 2em;
+	font-size: 3em;
 	border: 5px dotted black;
 	text-align: right;
 	background-color: green;
@@ -67,7 +73,7 @@ pre {
 	font-family: 'VT323', monospace;
 	color: yellow;
 	font-size: 50em;
-	margin-left: 1600px;
+	margin-left: 1800px;
 }
 
 </style>
@@ -82,7 +88,9 @@ pre {
 	}
 
 	var puzzleNum = 0;
-	var totalPuzzleNum = 2;
+	var puzzleLangs = ["arm", "C++", "haskell", "python", "pascal", "fortran"];
+	var totalPuzzleNum = puzzleLangs.length;
+	console.log("Total puzzle num: " + totalPuzzleNum);
 	function nextPuzzle() {
 		puzzleNum = (puzzleNum + 1) % totalPuzzleNum;
 		console.log("PUZZLE# " + puzzleNum);
@@ -156,6 +164,7 @@ pre {
 
 			var codePre = createPre("codeline" + i, arrayOfLines[i], 'none');
 			hljs.highlightBlock(codePre);
+			codePre.setAttribute("class", "hljs " + puzzleLangs[puzzleNum]);
 
 			var censored = arrayOfLines[i].replace(/\S/g, "*");
 			var censPre = createPre("censored" + i, censored, 'block');
@@ -180,7 +189,7 @@ pre {
 <body>
 
 	<div style="width: 100%; overflow: hidden;">
-		<div id="myDynamicTable" style="width: 1500px; float: left;"></div>
+		<div id="myDynamicTable" style="width: 1700px; float: left;"></div>
 		<div id="round" class="round"></div>
 	</div>
 

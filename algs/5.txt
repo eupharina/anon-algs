@@ -1,0 +1,23 @@
+for all CFG nodes n in N,  
+  OUT[n] = emptyset;
+
+Changed = N; 
+
+while (Changed != emptyset) {
+  choose a node n in Changed;
+  Changed = Changed \ { n }; 
+
+  IN[n] = emptyset;  
+
+  for all nodes p in predecessors(n) 
+     IN[n] = IN[n] U OUT[p]; 
+
+  oldout = OUT[n];
+  
+  OUT[n] = GEN[n] U (IN[n] -KILL[n]);   
+
+  if (OUT[n] changed) {  
+    for all nodes s in successors(n) 
+       Changed = Changed U { s };  
+  }
+}

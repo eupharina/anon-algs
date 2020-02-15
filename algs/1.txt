@@ -1,15 +1,28 @@
-Sub fizzbuzz()
-  For i = 1 to 100
-    print_number = True
-    If i is divisible by 3 Then
-      Print "Fizz"
-      print_number = False
-    End If
-    If i is divisible by 5 Then
-      Print "Buzz"
-      print_number = False
-    End If
-    If print_number = True Then print i
-    Print a newline
-  Next i
-End Sub
+define i32 @foo(i32 %a, i32 %b) #0 {
+  %1 = alloca i32, align 4
+  %2 = alloca i32, align 4
+  %c = alloca i32, align 4
+  store i32 %a, i32* %1, align 4
+  store i32 %b, i32* %2, align 4
+  br label %3
+
+; <label>:3                          ; preds = %6, %0
+  %4 = load i32, i32* %2, align 4
+  %5 = icmp ne i32 %4, 0
+  br i1 %5, label %6, label %12
+
+; <label>:6                          ; preds = %3
+  %7 = load i32, i32* %1, align 4
+  %8 = load i32, i32* %2, align 4
+  %9 = srem i32 %7, %8
+  store i32 %9, i32* %c, align 4
+  %10 = load i32, i32* %2, align 4
+  store i32 %10, i32* %1, align 4
+  %11 = load i32, i32* %c, align 4
+  store i32 %11, i32* %2, align 4
+  br label %3
+
+; <label>:12                         ; preds = %3
+  %13 = load i32, i32* %1, align 4
+  ret i32 %13
+}

@@ -1,0 +1,13 @@
+iter :: (Ord a) => [a] -> [a]
+iter (x:y:xs)
+    | x > y = y : iter (x:xs)
+    | otherwise = x : iter (y:xs)
+iter (x) = (x)
+
+foo' :: (Ord a) => [a] -> Int -> [a]
+foo' xs i 
+    | i == (length xs) = xs
+    | otherwise = foo' (iter xs) (i + 1) 
+ 
+foo :: (Ord a) => [a] -> [a]
+foo xs = foo' xs 0
