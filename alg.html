@@ -55,20 +55,27 @@ function tableCreate(){
 
     for(var i = 0; i < arrayOfLines.length; i++){
         var tr = tbl.insertRow();
+        
         var tdNum = tr.insertCell();
         tdNum.appendChild(document.createTextNode(i));
         tdNum.style.width  = '100px';
+        
         var tdLine = tr.insertCell();
-	tdLine.style.visibility = 'hidden';
-	var tdLineId = "line" + i;
-	tdLine.setAttribute("id", tdLineId);
-	(function(index){
-	    tdNum.addEventListener('click', function() {
-	        toggle(index);
-	    });
+        tdLine.style.visibility = 'hidden';
+        var tdLineId = "line" + i;
+        tdLine.setAttribute("id", tdLineId);
+        
+        (function(index){
+        	tdNum.addEventListener('click', function() {
+        		toggle(index);
+        	});
         })(tdLineId)
-	tdLine.appendChild(document.createTextNode(arrayOfLines[i]));
+        
+        var codeline = document.createElement("pre");
+        codeline.appendChild(document.createTextNode(arrayOfLines[i]));
+        tdLine.appendChild(codeline);
     }
+
     if (tableDiv.childNodes.length == 0)
         tableDiv.appendChild(tbl);
     else {
@@ -86,7 +93,7 @@ function tableCreate(){
 tableCreate();
 </script>
 
-	<button onclick="showAnswer()">Show answer</button>
+	<button onclick="showAnswer()">                 Show answer</button>
 	<button onclick="nextPuzzle()">Next puzzle</button>
 
 </body>
