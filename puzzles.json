@@ -8,7 +8,8 @@
     {
         "source" : "algs/2.txt",
         "lang"   : "C++",
-        "answer" : "Quick Sort"
+        "answer" : "Quick Sort",
+        "link"   : "https://www.geeksforgeeks.org/quick-sort/"
     },
     {
         "source" : "algs/3.txt",
