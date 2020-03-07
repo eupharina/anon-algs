@@ -79,6 +79,30 @@ pre {
 </style>
 
 <script>
+	var puzzleNum;
+	var totalPuzzleNum;
+	var puzzles;
+
+    function loadPuzzles() {
+		var filename = "puzzles.json";
+		$.ajax({
+			'async' : false,
+			'global' : false,
+			type : 'GET',
+			dataType : 'json',
+			url : filename,
+			success : function(data) {
+				puzzles = data;
+				console.log("Loaded puzzles from " + filename);
+			}
+		});
+
+	    totalPuzzleNum = puzzles.length;
+    	console.log("Total puzzle num: " + totalPuzzleNum);
+
+        puzzleNum = 0;
+    }
+
 	function showRow(row) {
 		var censPre = document.getElementById("censored" + row);
 		censPre.style.display = 'none';
@@ -87,10 +111,6 @@ pre {
 		codePre.style.display = 'block';
 	}
 
-	var puzzleNum = 0;
-	var puzzleLangs = ["arm", "C++", "haskell", "python", "pascal", "fortran"];
-	var totalPuzzleNum = puzzleLangs.length;
-	console.log("Total puzzle num: " + totalPuzzleNum);
 	function nextPuzzle() {
 		puzzleNum = (puzzleNum + 1) % totalPuzzleNum;
 		console.log("PUZZLE# " + puzzleNum);
@@ -135,16 +155,17 @@ pre {
 	}
 
 	function tableCreate() {
+        var currentPuzzle = puzzles[puzzleNum];
+
 		var alg;
-		var filename = "http://localhost:8000/algs/" + (puzzleNum + 1) + ".txt";
-		$.ajax({//ajax method to load the board.json and call the loadBoard() function on success
+		var filename = currentPuzzle["source"];
+		$.ajax({
 			'async' : false,
 			'global' : false,
 			type : 'GET',
 			dataType : 'text',
 			url : filename,
 			success : function(data) {
-				//         $("#main-container").hide()
 				alg = data;
 				console.log("loaded from " + filename);
 			}
@@ -157,6 +178,14 @@ pre {
 		var tbl = document.createElement('TABLE');
 		//tbl.style.border = '1px solid black';
 
+        var lang = currentPuzzle["lang"];
+
+        // In case original language is not supported by hljs library 
+        // 'hlLang' field can be set to choose how to highlight this code 
+        var hlLang = currentPuzzle["hljs"]; // highlight as hlLang language
+        if (hlLang == undefined)
+            hlLang = lang;
+
 		for (var i = 0; i < curLines; i++) {
 			var tr = tbl.insertRow();
 			createNum(tr, i);
@@ -164,7 +193,7 @@ pre {
 
 			var codePre = createPre("codeline" + i, arrayOfLines[i], 'none');
 			hljs.highlightBlock(codePre);
-			codePre.setAttribute("class", "hljs " + puzzleLangs[puzzleNum]);
+			codePre.setAttribute("class", "hljs " + hlLang);
 
 			var censored = arrayOfLines[i].replace(/\S/g, "*");
 			var censPre = createPre("censored" + i, censored, 'block');
@@ -195,6 +224,7 @@ pre {
 
 
 <script>
+loadPuzzles();
 tableCreate();
 </script>
 

@@ -1,0 +1,38 @@
+[
+    {
+        "source" : "algs/1.txt",
+        "hljs"   : "arm",
+        "lang"   : "LLVM Bitcode",
+        "answer" : "Euclidean Algorithm"
+    },
+    {
+        "source" : "algs/2.txt",
+        "lang"   : "C++",
+        "answer" : "Quick Sort"
+    },
+    {
+        "source" : "algs/3.txt",
+        "lang"   : "Haskell",
+        "answer" : "Bubble Sort",
+        "link"   : "https://smthngsmwhr.wordpress.com/2012/11/09/sorting-algorithms-in-haskell/" 
+    },
+    {
+        "source" : "algs/4.txt",
+        "lang"   : "Pascal",
+        "answer" : "Binary Search",
+        "link"   : "http://www.pp4s.co.uk/main/tu-ss-search-binary.html"
+    },
+    {
+        "source" : "algs/5.txt",
+        "hljs"   : "pascal",
+        "lang"   : "Pseudocode",
+        "answer" : "Reaching Definition",
+        "link"   : "https://en.wikipedia.org/wiki/Reaching_definition"
+    },
+    {
+        "source" : "algs/6.txt",
+        "lang"   : "Fortran",
+        "answer" : "Newton's Method",
+        "link"   : "http://faculty.washington.edu/rjl/classes/am583s2013/notes/fortran_newton.html"
+    }
+]

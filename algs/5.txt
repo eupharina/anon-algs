@@ -14,7 +14,7 @@ while (Changed != emptyset) {
 
   oldout = OUT[n];
   
-  OUT[n] = GEN[n] U (IN[n] -KILL[n]);   
+  OUT[n] = GEN[n] U (IN[n] - KILL[n]);   
 
   if (OUT[n] changed) {  
     for all nodes s in successors(n) 
