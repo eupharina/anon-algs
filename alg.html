@@ -69,11 +69,27 @@ pre {
 	border-color: yellow;
 }
 
+.right-col {
+	margin-left: 2000px;
+}
+
 .round {
 	font-family: 'VT323', monospace;
 	color: yellow;
 	font-size: 50em;
-	margin-left: 2800px;
+}
+
+.answer {
+	font-family: 'VT323';
+	color: blue;
+	font-size: 12em;
+}
+
+.lang {
+	font-family: 'Share Tech Mono', monospace;
+	font-weight: lighter;
+	color: magenta;
+	font-size: 6em;
 }
 
 </style>
@@ -123,6 +139,12 @@ pre {
 		for (var i = 0; i < curLines; i++) {
 			showRow(i);
 		}
+		
+		var answ = document.getElementById("answer");
+		answ.style.visibility = 'visible';
+		
+		var lang = document.getElementById("lang");
+		lang.style.visibility = 'visible';
 	}
 
 	function createPre(id, text, display) {
@@ -211,6 +233,15 @@ pre {
 		
 		var roundDiv = document.getElementById("round");
 		roundDiv.textContent = puzzleNum;
+		
+		var answ = document.getElementById("answer");
+		answ.textContent = currentPuzzle["answer"];
+		answ.style.visibility = 'hidden';
+		
+		var lang = document.getElementById("lang");
+		lang.textContent = currentPuzzle["lang"];
+		lang.style.visibility = 'hidden';
+
 	}
 </script>
 </head>
@@ -219,7 +250,9 @@ pre {
 
 	<div style="width: 100%; overflow: hidden; margin-bottom: 50px;">
 		<div id="myDynamicTable" style="width: 1700px; float: left;"></div>
-		<div id="round" class="round"></div>
+		<div id="round" class="round right-col"></div>
+		<div id="answer" class="answer right-col"></div>
+		<div id="lang" class="lang right-col"></div>
 	</div>
 
 
