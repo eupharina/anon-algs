@@ -34,5 +34,5 @@ The big yellow number represents the current round (starting with 0, of course).
 ### :tada: Host a game
 1. Click at the line number to open the line.
 2. Click at the `Show answer` button when someone has solved the puzzle (or everyone gave up).
-3. Click the `Next puzzle` to move to the next round.
+3. Click the `Next puzzle` button to move to the next round.
 4. Have fun!
